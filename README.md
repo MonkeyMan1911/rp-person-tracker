@@ -277,9 +277,9 @@ The `get_distance(voltage)` function finds the two calibration points surroundin
 
 The formula is:
 
-\[
+$$
 d=d_1+\frac{V-V_1}{V_2-V_1}(d_2-d_1)
-\]
+$$
 
 Where:
 
@@ -341,18 +341,18 @@ The procedure is:
 
 The calculation is:
 
-\[
+$$
 \text{SECONDS\_PER\_DEGREE}
 =\frac{\text{elapsed time in seconds}}
 {\text{degrees rotated}}
-\]
+$$
 
 For example, if the servo rotates approximately 30° in 2 seconds:
 
-\[
+$$
 \frac{2}{30}\approx0.0667
 \text{ seconds per degree}
-\]
+$$
 
 This is the value currently used by the program.
 
