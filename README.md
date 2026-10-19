@@ -619,7 +619,7 @@ The following limitations are known from the supplied code or remain to be verif
 
 ### 10.1 Calibration Range
 
-The active calibration table covers 5–90 cm. The program does not extrapolate outside that range, so out-of-range voltages produce no distance estimate.
+The active calibration table covers 5–90 cm. The program does not extrapolate outside that range, so out-of-range voltages produce no distance estimate. If particular sensors are found to be able to reliably detect above this range, the additional data points can be added in the same format.
 
 ### 10.2 Sensor Accuracy
 
@@ -627,11 +627,11 @@ The recorded calibration values were obtained using a piece of paper at manually
 
 ### 10.3 Servo Position Estimation
 
-The current angle is tracked in software using elapsed time. There is no physical angle sensor or encoder to confirm the actual position.
+The current angle is tracked in software using elapsed time. There is no physical angle sensor or encoder to confirm the actual position. Small variations in the actual angle may appear over time.
 
 ### 10.4 Target Selection
 
-The program selects between two fixed target angles, -45° and 45°. It does not calculate a continuous angle from the person's location.
+The program selects between two fixed target angles, -45° and 45°. It does not calculate a continuous angle from the person's location. Some form of positional sensing is required for more precise control.
 
 ### 10.5 Detection Versus Person Recognition
 
@@ -649,6 +649,7 @@ The complete project has not yet been tested. The tracking logic and wiring desc
 | `distance_calibration.py` | Collects analog voltage measurements at known distances. |
 | `measurements.txt` | Stores the recorded distance and average voltage measurements. |
 | `main.py` | Reads both sensors, estimates distances, checks consistency, and controls the servo. |
+| `lid_and_box.stl` | 3D printable file for housing the Pi, sensors, and servo. |
 
 ### File Relationships
 
