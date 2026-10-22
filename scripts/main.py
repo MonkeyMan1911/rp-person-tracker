@@ -16,8 +16,11 @@ SECONDS_PER_DEGREE = 0.06666666667
 REQUIRED_READINGS = 4
 ERROR_MARGIN = 3  # cm
 
+# Return-to-rest setting: loops in a row with nothing detected before going to ANGLE_REST
+NO_DETECT_LOOPS = 10
+
 # --- Hardware Initialization ---
-sensors = [ADC(Pin(26)), ADC(Pin(27))]
+sensors = [ADC(Pin(27)), ADC(Pin(26))]
 
 servo = PWM(Pin(6))
 servo.freq(50)
@@ -86,6 +89,7 @@ time.sleep(0.5)
 # Store recent readings
 history_0 = []
 history_1 = []
+no_detect_count = 0
 
 # --- Main Loop ---
 print("Tracking started. Press Ctrl+C to stop.")
@@ -110,6 +114,12 @@ try:
         else:
             history_1.clear()
 
+        # Count consecutive loops where neither sensor detects anything
+        if d0 is None and d1 is None:
+            no_detect_count += 1
+        else:
+            no_detect_count = 0
+
         # Check whether readings are consistent
         s0_consistent = readings_consistent(history_0)
         s1_consistent = readings_consistent(history_1)
@@ -121,7 +131,7 @@ try:
             f"({'READY' if s1_consistent else 'waiting'})"
         )
 
-        # Only use a sensor if it has 4 consistent readings
+        # Only use a sensor if it has consistent readings
         valid_d0 = history_0[-1] if s0_consistent else None
         valid_d1 = history_1[-1] if s1_consistent else None
 
@@ -135,11 +145,15 @@ try:
         elif valid_d0 is not None:
             target = ANGLE_SENSOR_0
 
+        elif no_detect_count >= NO_DETECT_LOOPS:
+            # Nothing detected by either sensor for a while: return to rest
+            target = ANGLE_REST
+
         else:
-            # No sensor has 4 consistent readings
+            # Readings still settling: hold position
             target = current_angle
 
-        # Move only after consistency requirement is met
+        # Move only when the target changes
         if target != current_angle:
             print(f"-> Moving to {target} degrees, then stopping")
             move_to(target)
