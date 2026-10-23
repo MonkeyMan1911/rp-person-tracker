@@ -2,21 +2,22 @@ from machine import ADC, Pin, PWM
 import time
 
 # --- Configuration & Tuning ---
-ANGLE_SENSOR_0 = -45
+ANGLE_SENSOR_0 = -45   # degrees from center (0 = servo's middle position)
 ANGLE_SENSOR_1 = 45
 ANGLE_REST = 0
 
-STOP_PULSE = 1.46
-SLOW_CW_PULSE = 1.44
-SLOW_CCW_PULSE = 1.48
+# Servo pulse range. 0.5-2.5 ms covers most hobby servos.
+# If the horn buzzes or hits its stops at the extremes, narrow these (try 0.6/2.4 or 1.0/2.0).
+MIN_PULSE_MS = 0.5     # pulse for -90 degrees
+MAX_PULSE_MS = 2.5     # pulse for +90 degrees
 
-SECONDS_PER_DEGREE = 0.06666666667
+SERVO_SETTLE_S = 0.4   # pause after a move so the servo can arrive before reading sensors
 
 # Consistency settings
-REQUIRED_READINGS = 4
+REQUIRED_READINGS = 2
 ERROR_MARGIN = 3  # cm
 
-# Return-to-rest setting: loops in a row with nothing detected before going to ANGLE_REST
+# Loops in a row with nothing detected before going back to ANGLE_REST
 NO_DETECT_LOOPS = 10
 
 # --- Hardware Initialization ---
@@ -34,22 +35,20 @@ calibration = [
 ]
 
 # --- Helper Functions ---
-current_angle = 0
+current_angle = ANGLE_REST
 
-def set_servo_pulse(ms):
-    duty = int((ms / 20.0) * 65535)
-    servo.duty_u16(duty)
+def set_angle(rel_deg):
+    """Command the servo to rel_deg (-90 to +90, 0 = center) and hold it there."""
+    rel_deg = max(-90, min(90, rel_deg))
+    pulse_ms = MIN_PULSE_MS + (rel_deg + 90) / 180.0 * (MAX_PULSE_MS - MIN_PULSE_MS)
+    servo.duty_u16(int(pulse_ms / 20.0 * 65535))
 
 def move_to(target):
     global current_angle
-    delta = target - current_angle
-    if delta == 0:
+    if target == current_angle:
         return
-
-    set_servo_pulse(SLOW_CCW_PULSE if delta > 0 else SLOW_CW_PULSE)
-    time.sleep(abs(delta) * SECONDS_PER_DEGREE)
-    set_servo_pulse(STOP_PULSE)
-
+    set_angle(target)
+    time.sleep(SERVO_SETTLE_S)
     current_angle = target
 
 def get_voltage(sensor):
@@ -83,8 +82,8 @@ def readings_consistent(readings):
     return True
 
 # --- Startup ---
-set_servo_pulse(STOP_PULSE)
-time.sleep(0.5)
+set_angle(ANGLE_REST)
+time.sleep(1.0)
 
 # Store recent readings
 history_0 = []
@@ -155,13 +154,13 @@ try:
 
         # Move only when the target changes
         if target != current_angle:
-            print(f"-> Moving to {target} degrees, then stopping")
+            print(f"-> Moving to {target} degrees")
             move_to(target)
 
         time.sleep(0.05)
 
 except KeyboardInterrupt:
     print("\nProgram stopped. Returning to rest.")
-    move_to(ANGLE_REST)
-    set_servo_pulse(STOP_PULSE)
+    set_angle(ANGLE_REST)
+    time.sleep(0.5)
     servo.deinit()
