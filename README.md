@@ -267,5 +267,8 @@ Press Ctrl+C to stop the program. It will attempt to return the servo to its res
 | File | Purpose |
 |---|---|
 | `main.py` | Initializes the sensors and positional servo, converts sensor readings into distances, checks consistency, selects target angles, and runs the tracking loop. |
+| `rotate.py` | Tests servo rotation. |
+| `distance_calibration.py` | Aids in distance sensor calibration by printing voltage values at a known distance.
+| `distance_read.py` | Tests if distance readings post-calibration are accurate. You must put your own measured points into the calibration list. |
 
 The previous `servo_calibration.py` file has been removed because the current program directly commands the positional servo using PWM pulse widths defined in `main.py`.
