@@ -1,17 +1,17 @@
 # Raspberry Pi Person Tracking System
 
 ## Table of Contents
-1. Overview
-2. Materials
-3. Assembly and Wiring
-4. Software Setup
-5. Distance Sensor Calibration
-6. How the Tracking Algorithm Works
-7. Servo Position Control
-8. Running the Program
-9. Troubleshooting
-10. Limitations
-11. Project Files
+1. [Overview](#1-overview)
+2. [Materials](#2-materials)
+3. [Assembly and Wiring](#3-assembly-and-wiring)
+4. [Software Setup](#4-software-setup)
+5. [Distance Sensor Calibration](#5-distance-sensor-calibration)
+6. [How the Tracking Algorithm Works](#6-how-the-tracking-algorithm-works)
+7. [Servo Position Control](#7-servo-position-control)
+8. [Running the Program](#8-running-the-program)
+9. [Troubleshooting](#9-troubleshooting)
+10. [Limitations](#10-limitations)
+11. [Project Files](#11-project-files)
 
 ## 1. Overview
 
