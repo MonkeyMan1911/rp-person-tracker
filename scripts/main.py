@@ -15,7 +15,7 @@ SERVO_SETTLE_S = 0.4   # pause after a move so the servo can arrive before readi
 
 # Consistency settings
 REQUIRED_READINGS = 2
-ERROR_MARGIN = 3  # cm
+ERROR_MARGIN = 4  # cm
 
 # Loops in a row with nothing detected before going back to ANGLE_REST
 NO_DETECT_LOOPS = 10
@@ -32,7 +32,7 @@ calibration = [
     (0.62400, 45), (0.68980, 50), (0.75625, 55), (0.84400, 60),
     (0.91745, 65), (0.96665, 70), (1.04145, 75), (1.10760, 80),
     (1.17860, 85), (1.24115, 90)
-]
+] # Sesnor calibration points
 
 # --- Helper Functions ---
 current_angle = ANGLE_REST
