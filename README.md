@@ -187,15 +187,15 @@ Your numbers will differ. Use these only as a rough sanity check.
 The program takes **20 ADC readings** per measurement and averages them to smooth out noise. It then finds the two calibration points surrounding the measured voltage and uses **linear interpolation**:
 
 $$
-d = d1 + (V - V1) / (V2 - V1) * (d2 - d1)
+d = d_1 + (V - V_1) / (V_2 - V_1) * (d_2 - d_1)
 $$
 
-- `V` is the measured voltage
-- `V1`, `V2` are the neighboring calibration voltages
-- `d1`, `d2` are their matching distances
-- `d` is the estimated distance
+- $V$ is the measured voltage
+- $V_1$, $V_2$ are the neighboring calibration voltages
+- $d_1$, $d_2$ are their matching distances
+- $d$ is the estimated distance
 
-If `V` falls outside the table, the function returns `None`, which the program treats as "out of range."
+If $V$ falls outside the table, the function returns `None`, which the program treats as "out of range."
 
 ## 8. Check your calibration
 
@@ -284,7 +284,7 @@ The servo is driven by a **50 Hz PWM signal** on GP6. The width of each pulse te
 The code maps a requested angle from -90° to +90° onto a pulse range:
 
 $$
-t = t_min + (angle + 90) / 180 * (t_max - t_min)
+t = t_{min} + (\theta + 90) / 180 * (t_{max} - t_{min})
 $$
 
 with these defaults:
