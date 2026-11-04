@@ -23,7 +23,6 @@ This guide walks you through building it yourself, start to finish. Extra refere
 8. [Check your calibration](#8-check-your-calibration)
 9. [Mount the sensors on the servo](#9-mount-the-sensors-on-the-servo)
 10. [Run the tracker](#10-run-the-tracker)
-11. [Demo](#11-demo)
 
 **Extra info**
 
