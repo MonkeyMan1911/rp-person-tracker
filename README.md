@@ -234,9 +234,6 @@ S0: 25.1cm (READY) | S1: 29.7cm (READY)
 
 Congratulations, you have built it. The sections below explain how it works and how to adjust it.
 
-## 11. Demo
-![](./rp_motion_demo.mp4)
-
 ---
 
 # Extra info
