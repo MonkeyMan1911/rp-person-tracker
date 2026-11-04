@@ -23,6 +23,7 @@ This guide walks you through building it yourself, start to finish. Extra refere
 8. [Check your calibration](#8-check-your-calibration)
 9. [Mount the sensors on the servo](#9-mount-the-sensors-on-the-servo)
 10. [Run the tracker](#10-run-the-tracker)
+11. [Demo](#11-demo)
 
 **Extra info**
 
@@ -233,6 +234,8 @@ S0: 25.1cm (READY) | S1: 29.7cm (READY)
 
 Congratulations, you have built it. The sections below explain how it works and how to adjust it.
 
+## 11. Demo
+<video src="./rp_motion_demo.mp4" controls title="Video" style="max-width: 100%;"></video>
 ---
 
 # Extra info
